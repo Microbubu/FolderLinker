@@ -1,0 +1,6 @@
+<Config>
+  <Linker SourceDirectory="D:\PlexMediaLibrary\Movies" DestinationDirectory="E:\WebDAV\Plex\Movies"/>
+  <Linker SourceDirectory="D:\PlexMediaLibrary\TV Shows" DestinationDirectory="E:\WebDAV\Plex\TV Shows"/>
+  <Linker SourceDirectory="E:\PlexMediaLibrary\Movies" DestinationDirectory="E:\WebDAV\Plex\Movies"/>
+  <Linker SourceDirectory="E:\PlexMediaLibrary\TV Shows" DestinationDirectory="E:\WebDAV\Plex\TV Shows"/>
+</Config>
