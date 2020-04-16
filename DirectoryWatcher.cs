@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
 namespace FolderLinker
 {
@@ -17,6 +14,10 @@ namespace FolderLinker
         {
             srcDir = src;
             dstDir = dst;
+        }
+
+        public void StartWatch()
+        {
             watcher = new FileSystemWatcher(srcDir);
             watcher.NotifyFilter = NotifyFilters.DirectoryName;
             watcher.EnableRaisingEvents = true;
@@ -46,6 +47,7 @@ namespace FolderLinker
             if (Directory.Exists(dstOldName))
             {
                 Directory.Move(dstOldName, dstNewName);
+                Service.Log.WriteLine($"{dstOldName} ⋙ {dstNewName}", LogType.Rename);
             }
         }
 
@@ -64,7 +66,10 @@ namespace FolderLinker
         {
             string dstPath = Path.Combine(dstDir, e.Name);
             if (Directory.Exists(dstPath))
+            {
                 Directory.Delete(dstPath);
+                Service.Log.WriteLine($"{dstPath}", LogType.Delete);
+            }
         }
 
         private void CreatedHandler(object sender, FileSystemEventArgs e)
