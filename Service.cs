@@ -98,10 +98,10 @@ namespace FolderLinker
         private void BuildConfigFile()
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append("<config>\n")
+            builder.Append("<Config>\n")
                 .Append("  <!-- Add your own Linker nodes here -->\n")
                 .Append("  <Linker SourceDirectory=\"\" DestinationDirectory=\"\"/>\n")
-                .Append("</config>");
+                .Append("</Config>");
 
             string config = Path.Combine(AppContext.BaseDirectory, configFileName);
             using (FileStream fs = File.Create(config))

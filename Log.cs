@@ -54,8 +54,9 @@ namespace FolderLinker
                 isFileOpen = true;
                 timer.Start();
             }
-            byte[] toWrite = Encoding.UTF8.GetBytes($"[{type}]\t" + content);
-            stream.Write(toWrite, 0, toWrite.Length);
+            string toWriteStr = $"[{type}]\t" + DateTime.Now.ToString("yyyy/MM/dd-hh:mm:ss.fff") + "\t" + content;
+            byte[] toWriteBytes = Encoding.UTF8.GetBytes(toWriteStr);
+            stream.Write(toWriteBytes, 0, toWriteBytes.Length);
         }
 
         public void WriteLine(string content, LogType type = LogType.Info)
