@@ -73,9 +73,8 @@ namespace FolderLinker
                 }
                 XmlDocument document = new XmlDocument();
                 document.Load(config);
-                XmlNode configNode = document.ChildNodes[0];
-                if (configNode.Name != "Config")
-                    return false;
+                XmlNode configNode = document.FirstChild;
+                if (configNode.Name != "Config") return false;
                 foreach (XmlNode node in configNode.ChildNodes)
                 {
                     if (node.Name == "Linker")
