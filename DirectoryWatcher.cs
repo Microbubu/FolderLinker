@@ -10,6 +10,7 @@ namespace FolderLinker
         private string dstDir;
         private string srcDir;
         private FileSystemWatcher watcher;
+
         public DirectoryWatcher(string src, string dst)
         {
             srcDir = src;
@@ -47,7 +48,7 @@ namespace FolderLinker
             if (Directory.Exists(dstOldName))
             {
                 Directory.Move(dstOldName, dstNewName);
-                Service.Log.WriteLine($"{dstOldName} ⋙ {dstNewName}", LogType.Rename);
+                Service.Log.WriteLine($"{dstOldName} => {dstNewName}", LogType.Rename);
             }
         }
 
@@ -55,7 +56,7 @@ namespace FolderLinker
         {
             this.RemoveEvents();
             watcher.Dispose();
-            watcher = null;
+
             watcher = new FileSystemWatcher(dstDir);
             watcher.NotifyFilter = NotifyFilters.DirectoryName;
             watcher.EnableRaisingEvents = true;
@@ -75,8 +76,7 @@ namespace FolderLinker
         private void CreatedHandler(object sender, FileSystemEventArgs e)
         {
             string dstPath = Path.Combine(dstDir, e.Name);
-            Linker linker = new Linker(dstPath, e.FullPath);
-            linker.Link();
+            Linker.Link(dstPath, e.FullPath);
         }
     }
 }

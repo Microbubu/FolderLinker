@@ -2,23 +2,15 @@
 
 namespace FolderLinker
 {
-    public class Linker
+    public static class Linker
     {
-        private string srcDir;
-        private string dstDir;
-        public Linker(string src, string dst)
+        public static void Link(string dir, string dstDir)
         {
-            this.srcDir = src;
-            this.dstDir = dst;
-        }
-
-        public void Link()
-        {
-            string script = "new-item -itemtype Junction -path " + $"\"{srcDir}\"" +
+            string script = "new-item -itemtype Junction -path " + $"\"{dir}\"" +
                             " -target " + $"\"{dstDir}\"";
             PowerShell ps = PowerShell.Create().AddScript(script);
             ps.Invoke();
-            Service.Log.WriteLine($"{dstDir} ⋙ {srcDir}", LogType.Link);
+            Service.Log.WriteLine($"{dstDir} => {dir}", LogType.Link);
         }
     }
 }

@@ -10,18 +10,22 @@ namespace FolderLinker
     public class Service : ServiceControl
     {
         public static Log Log;
+
         private string configFileName = "config.xml";
         private Dictionary<string, string> dirMap;
+
         public bool Start(HostControl hostControl)
         {
             Service.Log = new Log();
             Service.Log.WriteLine("Welcome, enjoy linking your folders.");
+
             dirMap = new Dictionary<string, string>();
             if (!MapConfigFromFile())
             {
                 Service.Log.WriteLine($"Reading config file failed.");
                 return false;
             }
+
             FirstRun();
             StartWatchService();
             return true;
@@ -46,8 +50,7 @@ namespace FolderLinker
                     string dstFolder = Path.Combine(map.Value, folderName);
                     if (!Directory.Exists(dstFolder))
                     {
-                        Linker linker = new Linker(dstFolder, folder);
-                        linker.Link();
+                        Linker.Link(dstFolder, folder);
                     }
                 }
             }
@@ -71,10 +74,12 @@ namespace FolderLinker
                     BuildConfigFile();
                     return false;
                 }
+
                 XmlDocument document = new XmlDocument();
                 document.Load(config);
                 XmlNode configNode = document.FirstChild;
                 if (configNode.Name != "Config") return false;
+
                 foreach (XmlNode node in configNode.ChildNodes)
                 {
                     if (node.Name == "Linker")
@@ -107,7 +112,6 @@ namespace FolderLinker
             {
                 byte[] configBytes = Encoding.UTF8.GetBytes(builder.ToString());
                 fs.Write(configBytes, 0, configBytes.Length);
-                fs.Close();
             }
             Service.Log.WriteLine("Config file not exists, created a sample.");
         }
