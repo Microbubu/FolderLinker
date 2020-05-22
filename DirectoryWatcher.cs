@@ -56,11 +56,7 @@ namespace FolderLinker
         {
             this.RemoveEvents();
             watcher.Dispose();
-
-            watcher = new FileSystemWatcher(dstDir);
-            watcher.NotifyFilter = NotifyFilters.DirectoryName;
-            watcher.EnableRaisingEvents = true;
-            this.AddEvents();
+            this.StartWatch();
         }
 
         private void DeletedHandler(object sender, FileSystemEventArgs e)
